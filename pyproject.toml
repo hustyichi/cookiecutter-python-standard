@@ -65,3 +65,11 @@ source = "app"
 
 [tool.black]
 line-length = 120
+
+[tool.isort]
+include_trailing_comma = true
+line_length = 120
+multi_line_output = 3
+profile = "black"
+src_paths = ["app", "tests"]
+use_parentheses = true
