@@ -1,6 +1,7 @@
 lint:
 	pylint app
 	mypy app
+	isort --check --diff app
 
 test:
 	pytest
