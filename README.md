@@ -8,15 +8,17 @@
 
 ## 配置文件
 
+## pyproject.toml
+
 统一使用`pyproject.toml`来配置各个工具。
 
 使用统一的`gitignore`模板
 
-## Lint
+### Lint
 
 使用`pylint`
 
-### 配置
+#### 配置
 
 在`pyproject.toml`中配置
 
@@ -45,11 +47,11 @@ disable = ["missing-docstring", # 缺少docstring
 min-public-methods = 0 #类公共方法数目最小限制放宽为0
 ```
 
-## Formater
+### Formater
 
 使用`black`
 
-### 配置
+#### 配置
 
 在`pyproject.toml`中配置
 
@@ -58,19 +60,32 @@ min-public-methods = 0 #类公共方法数目最小限制放宽为0
 line-length = 120 # 每行代码宽度限制，需要和pylint配置匹配
 ```
 
-## Sort Imports
+### Sort Imports
 
 使用`isort`
 
-## type
+#### 配置
+
+在`pyproject.toml`中配置
+
+```toml
+[tool.isort]
+line_length = 120
+use_parentheses = true
+include_trailing_comma = true
+multi_line_output = 3
+src_paths = ["app", "tests"]
+```
+
+### type
 
 使用`mypy`
 
-## 测试
+### 测试
 
 使用`pytest`
 
-### 配置
+#### 配置
 
 在`pyproject.toml`中配置
 
@@ -82,11 +97,11 @@ testpaths = [
 ]
 ```
 
-## 测试覆盖
+### 测试覆盖
 
 使用 `pytest-cov`插件和`coverage`
 
-### 配置
+#### 配置
 
 在`pyproject.toml`中配置
 
@@ -110,9 +125,56 @@ source = "app" # 代码覆盖检查目录
 
 ```
 
-## CI 检查
+### CI 检查
 
 ```bash
 make lint # pylint 和 mypy
 make test # pytest 和覆盖率检查
+```
+
+## setup.cfg
+
+一些工具（flake8、yapf）暂时不支持在`pyproject.toml`中配置，可以使用`setup.cfg`文件进行配置。
+
+一个典型的`setup.cfg`文件如下：
+
+```ini
+# content of setup.cfg
+[tool:pytest]
+junit_family = xunit2
+norecursedirs = .git node_modules tmp* apilogs
+
+[flake8]
+exclude = .git, venv*, docs, node_modules
+max-line-length = 120
+select = C,E,F,W,B,B950
+ignore =
+    # E203: Whitespace before ':'
+    # => PEP 8 对于 slices 的写法要求将 : 看成是优先级最低的二元操作符, 左右两边有等量空格
+    # => 详见: https://github.com/psf/black#slices
+    #          https://www.python.org/dev/peps/pep-0008/#whitespace-in-expressions-and-statements
+    E203
+    # W503: Line break occurred before a binary operator
+    # => 与 W504 冲突, PEP 8 现在推荐使用 W504 的规则
+    W503,
+    # E501: Line too long (82 > 79 characters)
+    # => 用 flake8-bugbear 的 B950 代替, 允许 10% 的超出 (超出到 88)
+    B950,
+    # 暂时先忽略Line too long的问题. TODO black 工具格式化
+    E501,
+    # E722: do not use bare 'except'
+    # => 用 B001 代替, 说明更丰富
+    E722,
+
+[yapf]
+COLUMN_LIMIT = 150
+split_complex_comprehension=True
+
+
+[isort]
+line_length = 120
+use_parentheses = True
+include_trailing_comma = True
+multi_line_output = 3
+
 ```
