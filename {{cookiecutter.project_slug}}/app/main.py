@@ -1,8 +1,5 @@
-from typing import Union
-
-
-def myabs(n:Union[int,float]):
-    assert isinstance(n,(int,float))
+def myabs(n: int):
+    assert isinstance(n, int)
     if n >= 0:
         return n
     return -n
