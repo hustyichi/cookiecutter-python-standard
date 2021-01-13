@@ -1,8 +1,8 @@
 [tool.poetry]
-authors = ["Your Name <you@example.com>"]
-description = ""
+authors = ["{{cookiecutter.authors}}"]
+description = "{{cookiecutter.description}}"
 name = "app"
-version = "0.1.0"
+version = "{{cookiecutter.version}}"
 
 [tool.poetry.dependencies]
 python = "^3.8"

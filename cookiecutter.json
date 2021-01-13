@@ -1,4 +1,7 @@
 {
   "project_name": "Meideng startup",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "authors": "meideng",
+  "description": "python develop standard",
+  "version": "0.1"
 }
