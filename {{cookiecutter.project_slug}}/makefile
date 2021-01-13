@@ -3,6 +3,10 @@ lint:
 	mypy app
 	isort --check --diff app
 
+format:
+	black app
+	isort app
+
 test:
 	pytest
 
